@@ -23,9 +23,10 @@ class _RealtimeState extends State<Realtime> {
   H1Model? dataFromAPI;
   _getData() async {
     try {
-      String url = "";
+      String url = "https://solar.connerpanaro.com/api/GetLatest";
       http.Response res = await http.get(Uri.parse(url));
       if (res.statusCode == 200) {
+        var rrr = res.body.toString();
         dataFromAPI = H1Model.fromJson(json.decode(res.body));
         _isLoading = false;
         setState(() {});
@@ -73,12 +74,12 @@ class _RealtimeState extends State<Realtime> {
                   trailing: Icon(Icons.favorite_outline),
                 ),
                 Container(
-                  child: Text(dataFromAPI!.pvPower1.toString()),
+                  child: Text(dataFromAPI!.pV1Amps.toString()),
                 ),
                 Container(
                   padding: EdgeInsets.all(16.0),
                   alignment: Alignment.centerLeft,
-                  child: Text(dataFromAPI!.pvPower1.toString()),
+                  child: Text(dataFromAPI!.pV1Voltage.toString()),
                 ),
               ],
             )),
@@ -105,12 +106,12 @@ class _RealtimeState extends State<Realtime> {
                   trailing: Icon(Icons.favorite_outline),
                 ),
                 Container(
-                  child: Text(dataFromAPI!.pvPower2.toString()),
+                  child: Text(dataFromAPI!.pV2Amps.toString()),
                 ),
                 Container(
                   padding: EdgeInsets.all(16.0),
                   alignment: Alignment.centerLeft,
-                  child: Text(dataFromAPI!.pvPowerTotal.toString()),
+                  child: Text(dataFromAPI!.pV2Voltage.toString()),
                 ),
               ],
             ))
