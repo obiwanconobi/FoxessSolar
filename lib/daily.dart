@@ -2,12 +2,13 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'dart:convert';
 
 import 'package:solar_flutter/models/dailymodel.dart';
 
 class Daily extends StatefulWidget {
-  const Daily({Key? key}) : super(key: key);
+  const Daily({super.key});
 
   @override
   State<Daily> createState() => _DailyState();
@@ -38,6 +39,14 @@ class _DailyState extends State<Daily> {
     }
   }
 
+  String _twoDigits(int n) {
+  if (n >= 10) {
+    return "$n";
+  } else {
+    return "0$n";
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +54,7 @@ class _DailyState extends State<Daily> {
       backgroundColor: Colors.orange[100],
       appBar: AppBar(
         backgroundColor: Colors.orange[100],
-        title: Center(child: const Text("H1 Solar App", style: TextStyle(fontWeight: FontWeight.bold))),
+        title: const Center(child: Text("H1 Solar App", style: TextStyle(fontWeight: FontWeight.bold))),
       ),
       body: 
        _isLoading
@@ -53,54 +62,118 @@ class _DailyState extends State<Daily> {
               child: CircularProgressIndicator(),
             )
           :
-      ListView.builder(
+      ListView.builder( 
         itemCount: dataFromAPI?.length,
         itemBuilder: (context, index) {
           var dailyModel = dataFromAPI?[index];
-
+          var originalDateTime = dailyModel?.entryDate ?? DateTime.now();
+          var stringDate = DateFormat('EEEE d MMMM').format(originalDateTime);
+          var stringTime = DateFormat('jms').format(originalDateTime);
           return Card(
             color: Colors.orange[200],
             // Customize the Card as per your model
             child: Column(
               children: [
                 ListTile(
-                title: Text(dailyModel?.entryDate.toString() ?? "Loading..."),
+                title:  Tooltip(
+                            message: '$stringTime',
+                            child: Text('$stringDate', textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold),),
+                          ),
                   // Add more widgets based on your model properties
                 ),
-                Container(
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      alignment: Alignment.centerLeft,
-                      child: Text( 'Solar Total: ' + dailyModel!.solar.toString() + 'w'),
-                ),
-                Row(
-                  children: [
-                    Container(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                          alignment: Alignment.centerLeft,
-                          child: Text( 'Feed In: ' + dailyModel!.feed.toString() + 'w'),
-                    ),
-                    Container(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                          alignment: Alignment.centerLeft,
-                          child: Text( 'From Grid: ' + dailyModel!.grid.toString() + 'w'),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 15),
-                          alignment: Alignment.centerLeft,
-                          child: Text( 'Battery Charge: ' + dailyModel!.batteryCharge.toString() + 'w'),
-                    ),
-                    Container(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 15),
-                          alignment: Alignment.centerLeft,
-                          child: Text( 'Battery Discharge: ' + dailyModel!.batteryDischarge.toString() + 'w'),
-                    ),
-                  ],
-                ),
+                Row(children: 
+                [
 
+                  //Solar
+                  Card(
+                    color: Colors.transparent,
+                    elevation: 0,
+                    child:
+                      Column(children: 
+                      [
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text('Solar',style: TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                        Row(
+                        children: [
+                          const Tooltip(
+                            message: 'Total Solar Generation',
+                            child: Icon(
+                              Icons.solar_power,
+                            ),
+                          ),
+                          Text( '${dailyModel!.solar}kw', style: const TextStyle(fontWeight: FontWeight.bold)),
+
+                      ],),]),
+                  ),
+                  //Inverter
+                  Card(
+                    color: Colors.transparent,
+                    elevation: 0,
+                    margin: const EdgeInsets.fromLTRB(50,0 ,0 , 0),
+                    child:
+                      Column(children: 
+                      [
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text('Inverter', style: TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                        Row(
+                        children: [
+                          const Tooltip(
+                            message: 'From Grid',
+                            child: Icon(
+                              Icons.grid_on,
+                            ),
+                          ),
+                          Text( '${dailyModel.grid}kw', style: const TextStyle(fontWeight: FontWeight.bold)),
+                          const Tooltip(
+                            message: 'Feed in',
+                            child: Icon(
+                              Icons.energy_savings_leaf,
+                            ),
+                          ),
+                          Text( '${dailyModel.feed}kw', style: const TextStyle(fontWeight: FontWeight.bold)),
+
+                      ],),]),
+
+                  ),
+                  //Battery
+                  Card(
+
+                    color: Colors.transparent,
+                    elevation: 0,
+                    margin: const EdgeInsets.fromLTRB(20,0 ,0 , 0),
+                    child:
+                      Column(children: 
+                      [
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text('Battery', style: TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                        Row(
+                        children: [
+                          const Tooltip(
+                            message: 'Battery Charge',
+                            child: Icon(
+                              Icons.battery_charging_full,
+                            ),
+                          ),
+                          Text( '${dailyModel.batteryCharge}kw', style: const TextStyle(fontWeight: FontWeight.bold)),
+                          const Tooltip(
+                            message: 'Battery Discharge',
+                            child: Icon(
+                              Icons.battery_0_bar,
+                            ),
+                          ),
+                          Text( '${dailyModel.batteryDischarge}kw', style: const TextStyle(fontWeight: FontWeight.bold)),
+
+                      ],),]),
+
+                  ),
+
+                ],)
               ],
             ),
           );

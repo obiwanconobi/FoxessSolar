@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:solar_flutter/models/h1model.dart';
-import 'package:flutter_svg/flutter_svg.dart'; 
 class Realtime extends StatefulWidget {
-  const Realtime({Key? key}) : super(key: key);
+  const Realtime({super.key});
 
   @override
   State<Realtime> createState() => _RealtimeState();
@@ -42,7 +40,7 @@ class _RealtimeState extends State<Realtime> {
       backgroundColor: Colors.orange[100],
       appBar: AppBar(
         backgroundColor: Colors.orange[100],
-        title: Center(child: const Text("H1 Solar App", style: TextStyle(fontWeight: FontWeight.bold))),
+        title: const Center(child: Text("H1 Solar App", style: TextStyle(fontWeight: FontWeight.bold))),
       ),
       body: 
        _isLoading
@@ -50,8 +48,8 @@ class _RealtimeState extends State<Realtime> {
               child: CircularProgressIndicator(),
             )
           :
-       Column(
-         children: [
+        Column(
+         children:[
            Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: 
@@ -71,24 +69,24 @@ class _RealtimeState extends State<Realtime> {
                 elevation: 0,
                 child: Column(
                   children: [
-                    ListTile(
+                    const ListTile(
                       title: Text('PV1', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                       trailing: Icon(Icons.solar_power),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                       alignment: Alignment.centerLeft,
-                      child: Text( 'Current: ' + dataFromAPI!.pV1Amps.toString() + 'A'),
+                      child: Text( 'Current: ${dataFromAPI!.pV1Amps}A'),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Voltage: ' + dataFromAPI!.pV1Voltage.toString() + 'V'),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Voltage: ${dataFromAPI!.pV1Voltage}V'),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Power: ' + dataFromAPI!.pvPower1.toString() + 'w', style: TextStyle(fontSize: 20)),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Power: ${dataFromAPI!.pvPower1}w', style: const TextStyle(fontSize: 20)),
                     ),
                   ],
                 )),
@@ -110,24 +108,24 @@ class _RealtimeState extends State<Realtime> {
                 elevation: 0,
                 child: Column(
                   children: [
-                    ListTile(
+                    const ListTile(
                       title: Text('PV2', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                       trailing: Icon(Icons.solar_power),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Current: ' + dataFromAPI!.pV2Amps.toString() + 'A'),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Current: ${dataFromAPI!.pV2Amps}A'),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Voltage: ' + dataFromAPI!.pV2Voltage.toString() + 'V'),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Voltage: ${dataFromAPI!.pV2Voltage}V'),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Power: ' + dataFromAPI!.pvPower2.toString() + 'w', style: TextStyle(fontSize: 20)),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Power: ${dataFromAPI!.pvPower2}w', style: const TextStyle(fontSize: 20)),
                     ),
                   ],
                 ))
@@ -138,7 +136,7 @@ class _RealtimeState extends State<Realtime> {
             Container(
                 height:180,
                 width:380,
-                margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                 decoration: BoxDecoration(
                   color:Colors.orange[200],
                   borderRadius: BorderRadius.circular(20),
@@ -148,24 +146,24 @@ class _RealtimeState extends State<Realtime> {
                 elevation: 0,
                 child: Column(
                   children: [
-                    ListTile(
+                    const ListTile(
                       title: Text('Inverter', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                       trailing: Icon(Icons.solar_power),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Solar Total: ' + dataFromAPI!.pvPowerTotal.toString() + 'w', style: TextStyle(fontSize: 20)),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Solar Total: ${dataFromAPI!.pvPowerTotal}w', style: const TextStyle(fontSize: 20)),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('From Grid: ' + dataFromAPI!.fromGrid.toString() + 'w'),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('From Grid: ${dataFromAPI!.fromGrid}w'),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('To Grid: ' + dataFromAPI!.feedIn.toString() + 'w'),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('To Grid: ${dataFromAPI!.feedIn}w'),
                     ),
                   ],
                 ))
@@ -174,7 +172,7 @@ class _RealtimeState extends State<Realtime> {
             Container(
                 height:180,
                 width:380,
-                margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                 decoration: BoxDecoration(
                   color:Colors.orange[200],
                   borderRadius: BorderRadius.circular(20),
@@ -184,24 +182,24 @@ class _RealtimeState extends State<Realtime> {
                 elevation: 0,
                 child: Column(
                   children: [
-                    ListTile(
+                    const ListTile(
                       title: Text('Battery', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                       trailing: Icon(Icons.battery_full),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Battery Charge: ' + dataFromAPI!.batteryCharge.toString() + 'w'),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Battery Charge: ${dataFromAPI!.batteryCharge}w'),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Battery Discharge: ' + dataFromAPI!.batteryDischarge.toString() + 'w'),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Battery Discharge: ${dataFromAPI!.batteryDischarge}w'),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Text('Battery SOC: ' + dataFromAPI!.batterySoc.toString() + '%', style: TextStyle(fontSize: 20)),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Text('Battery SOC: ${dataFromAPI!.batterySoc}%', style: const TextStyle(fontSize: 20)),
                     ),
                   ],
                 ))

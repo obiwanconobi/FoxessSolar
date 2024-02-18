@@ -33,6 +33,7 @@ dependencies:
   http: ^1.2.1
   flutter_svg_provider: ^1.0.7
   flutter_svg: ^2.0.9
+  intl: ^0.18.1
 
 
 
