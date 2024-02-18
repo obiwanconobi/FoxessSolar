@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:solar_flutter/models/h1model.dart';
+import 'package:get_storage/get_storage.dart';
 class Realtime extends StatefulWidget {
   const Realtime({super.key});
 
@@ -11,9 +12,12 @@ class Realtime extends StatefulWidget {
 
 class _RealtimeState extends State<Realtime> {
   bool _isLoading = true;
+  String baseUrl = "";
 
   @override
   void initState() {
+    GetStorage.init();
+    baseUrl = GetStorage().read('serverUrl') ?? "Err";
     super.initState();
     _getData();
   }
@@ -21,7 +25,7 @@ class _RealtimeState extends State<Realtime> {
   H1Model? dataFromAPI;
   _getData() async {
     try {
-      String url = "https://solar.connerpanaro.com/api/GetLatest";
+      String url = "$baseUrl/api/GetLatest";
       http.Response res = await http.get(Uri.parse(url));
       if (res.statusCode == 200) {
         var rrr = res.body.toString();

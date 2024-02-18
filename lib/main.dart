@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:solar_flutter/home.dart';
+
 
 
 void main() {

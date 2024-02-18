@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:solar_flutter/daily.dart';
 import 'package:solar_flutter/realtime.dart';
+import 'package:solar_flutter/settings.dart';
 
 void main() {
   runApp(const Home());
@@ -16,6 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int selectedPageIndex = 0;
   @override
+  
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -29,9 +31,7 @@ class _HomeState extends State<Home> {
             child: Daily(),
           ),
           Center(
-            child: Text(
-              'Settings',
-            ),
+            child: SettingsWidget(),
           ),
         ][selectedPageIndex],
         bottomNavigationBar: NavigationBar(

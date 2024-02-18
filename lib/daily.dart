@@ -1,10 +1,9 @@
 import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:convert';
-
+import 'package:get_storage/get_storage.dart';
 import 'package:solar_flutter/models/dailymodel.dart';
 
 class Daily extends StatefulWidget {
@@ -16,9 +15,12 @@ class Daily extends StatefulWidget {
 
 class _DailyState extends State<Daily> {
   bool _isLoading = true;
+  String baseUrl = "";
 
   @override
   void initState() {
+    GetStorage.init();
+    baseUrl = GetStorage().read('serverUrl') ?? "Err";
     super.initState();
     _getData();
   }
@@ -26,7 +28,7 @@ class _DailyState extends State<Daily> {
   List<DailyModel>? dataFromAPI;
   _getData() async {
     try {
-      String url = "https://solar.connerpanaro.com/api/GetDaily";
+      String url = "$baseUrl/api/GetDaily";
       http.Response res = await http.get(Uri.parse(url));
       if (res.statusCode == 200) {
         var result = json.decode(res.body);
