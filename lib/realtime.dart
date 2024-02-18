@@ -48,7 +48,9 @@ class _RealtimeState extends State<Realtime> {
               child: CircularProgressIndicator(),
             )
           :
-        Column(
+        SingleChildScrollView(
+          child:
+            Column(
          children:[
            Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -207,7 +209,7 @@ class _RealtimeState extends State<Realtime> {
             )
          ],
        )
-                     
+          )              
      );     
   }
 }
